@@ -14,10 +14,20 @@
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/DJRHails/vanity-algos)](https://github.com/DJRHails/vanity-algos/pulls)
 </h4>
 
-## What's a vanity address
+## What's a vanity address?
+A vanity address is an address which contains some personalisation, making it look less random.
 
-TODO(DJRHails): Explain vanity address
+### Examples
+**HAILS**  `HAILSN476AQKWQ46TSIG4XGOCBLGG2CICATHB6YCAWN4SQNGH66QDKHGPQ`
+**ENCODE** `ENCODE2SRL3QOTLN67FLSURTQ5R7NO3WTSAU6ZAKTOIVBPQFA3G326TGXY`
 
-### Usage
+## Usage
+```bash
+go get github.com/DJRHails/vanity-algos
 
-TODO(DJRHails): Add usage
+# Generate 3 new addresses with prefix FOO
+vanity-algos gen -n 3 FOO
+
+# Generate 2 new addresses matching regex
+vanity-algos gen -n 2 '^[0-9]{5}'
+```
