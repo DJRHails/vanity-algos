@@ -68,7 +68,13 @@ func runGen(cmd *cobra.Command, args []string) error {
 	// TODO(DJRHails): Should generate for regex too
 	// https://ro-che.info/articles/2018-08-01-probability-of-regex
 	diff, prob50, prob99 := generateStatistics(pattern)
-	bar := progressbar.Default(prob99 * int64(count), "generating")
+	var bar *progressbar.ProgressBar
+	if !regex {
+		bar = progressbar.Default(prob99 * int64(count), "generating")
+	} else {
+		bar = progressbar.Default(-1, "generating")
+	}
+
 
 	results := make(chan *crypto.Account, count)
 	matcher := &process.Matcher{
@@ -88,11 +94,12 @@ func runGen(cmd *cobra.Command, args []string) error {
 	}
 
 	// Initial Output
-	printExample(pattern)
+	if !regex {
+		printExample(pattern)
 
-	fmt.Printf("Difficulty:   %s\n", humanize.Comma(int64(diff)))
-	fmt.Printf("50-50 chance: %s\n", humanize.Comma(prob50))
-
+		fmt.Printf("Difficulty:   %s\n", humanize.Comma(int64(diff)))
+		fmt.Printf("50-50 chance: %s\n", humanize.Comma(prob50))
+	}
 	// Start workers, and outputer
 	var ctx = context.Background()
 	var cancel context.CancelFunc
